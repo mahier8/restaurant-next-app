@@ -28,8 +28,7 @@ function Navbar() {
       </div>
       <div className={styles.item}>
         <div className={styles.cart}>
-          {/* my image below isnt working */}
-          <Image src="/img.cart.png" alt="" width="30" height="30" />
+          <Image src="/img/cart.png" alt="" width="30px" height="30px" />
           <div className={styles.counter}>2</div>
         </div>
       </div>
