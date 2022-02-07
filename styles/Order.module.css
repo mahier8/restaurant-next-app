@@ -25,6 +25,8 @@
   align-items: center;
 }
 
+/* to create the blinking animation on the 
+icons (food orders) which are in progress  */
 .inProgress {
   display: flex;
   flex-direction: column;
@@ -32,6 +34,7 @@
   animation: inProgress 1s ease infinite alternate;
 }
 
+/* matches the above styles class */
 @keyframes inProgress {
   from {
     opacity: 0;
@@ -98,6 +101,8 @@
     font-size: 20px;
   }
 
+  /* You can add text before an element,
+  using css only */
   .id::before {
     content: "Order ID: ";
     font-weight: 500;
