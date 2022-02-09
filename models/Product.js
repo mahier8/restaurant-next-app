@@ -1,19 +1,19 @@
-import { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 // creating a schema for products. Need schemas for titles(names),
 // descriptions, prices, size, additional ingredients, images
 //  *check the product page
-const ProductSchema = new Mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
     title: {
       type: String,
       required: true,
-      maxLength: 60,
+      maxlength: 60,
     },
-    description: {
+    desc: {
       type: String,
       required: true,
-      maxLength: 200,
+      maxlength: 200,
     },
     img: {
       type: String,
@@ -37,5 +37,5 @@ const ProductSchema = new Mongoose.Schema(
 
 // if we already have a model for Product, do not create an
 // additional model, just use the model we already have
-export default Mongoose.models.Product ||
-  Mongoose.model("Product", ProductSchema);
+export default mongoose.models.Product ||
+  mongoose.model("Product", ProductSchema);

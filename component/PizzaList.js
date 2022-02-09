@@ -2,7 +2,9 @@ import React from "react";
 import styles from "../styles/PizzaList.module.css";
 import PizzaCard from "./PizzaCard";
 
-function PizzaList() {
+function PizzaList({ pizzaList }) {
+  // dont forgot to destructure what you want
+  // as the above prop
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>The best pizza in town</h1>
@@ -13,12 +15,12 @@ function PizzaList() {
         officia aut error sunt tenetur cum!
       </p>
       <div className={styles.wrapper}>
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
-        <PizzaCard />
+        {pizzaList.map((pizza) => (
+          <PizzaCard key={pizza._id} pizza={pizza} />
+          // the id in the key, comes from the id that gets created
+          // each time in the database (MONGO DB) once we create
+          // (INSERT eg. MySQL) pizza entries
+        ))}
       </div>
     </div>
   );
