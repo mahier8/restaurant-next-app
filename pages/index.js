@@ -21,11 +21,19 @@ export default function Home({ pizzaList }) {
   );
 }
 
+// in next.js we use the getServerSideProps function
+// instead of the useEffect hook, to make API requests
 export const getServerSideProps = async () => {
+  // we installed axios to help us make API requests
   const res = await axios.get("http://localhost:3000/api/products");
   return {
     props: {
       pizzaList: res.data,
+      // I create this prop once i get the data from the
+      // API request. With this prop I stored, I move it
+      // back to the top and pass it in as an argument(prop)
+      // into the Home function. From there, I then pass
+      // it down into the PizzaList component.
     },
   };
 };
