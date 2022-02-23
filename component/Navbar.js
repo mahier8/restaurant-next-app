@@ -1,8 +1,13 @@
 import React from "react";
 import styles from "../styles/Navbar.module.css";
 import Image from "next/image";
+// we import redux
+import { useSelector } from "react-redux";
+import Link from "next/link";
 
 function Navbar() {
+  // we use the useSelector hook to bring in the Redux state
+  const quantity = useSelector((state) => state.cart.quantity);
   return (
     <div className={styles.container}>
       <div className={styles.item}>
@@ -26,12 +31,16 @@ function Navbar() {
           <li className={styles.listItem}>Contact</li>
         </ul>
       </div>
-      <div className={styles.item}>
-        <div className={styles.cart}>
-          <Image src="/img/cart.png" alt="" width="30px" height="30px" />
-          <div className={styles.counter}>2</div>
+      {/* I can make the range of the div I click on smaller */}
+      <Link href="/cart" passHref>
+        <div className={styles.item}>
+          <div className={styles.cart}>
+            <Image src="/img/cart.png" alt="" width="30px" height="30px" />
+            {/* we read from the above variable */}
+            <div className={styles.counter}>{quantity}</div>
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 }

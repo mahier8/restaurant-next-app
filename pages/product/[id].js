@@ -2,6 +2,9 @@ import Image from "next/image";
 import React, { useState } from "react";
 import styles from "../../styles/Product.module.css";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/cartSlice";
+// dispatch method from react redux
 
 function Product({ pizza }) {
   // we set the size to 0 initially, the first amount (0 index)
@@ -13,6 +16,7 @@ function Product({ pizza }) {
   // we create an empty array to store the extras a pizza has
   const [quantity, setQuantity] = useState(1);
   // how many pizza we want, the default value is 1
+  const dispatch = useDispatch();
 
   // we originally hardcoded the below, but now that we have
   // pizza passed in using getServerSideProps, we dont need it
@@ -64,6 +68,15 @@ function Product({ pizza }) {
       setExtras(extras.filter((extra) => extra._id !== option._id));
       // we subtract these values from the array in the useState hook
     }
+  };
+
+  // here we want to dispatch the cart actions
+  const handleClick = () => {
+    dispatch(addProduct({ ...pizza, extras, price, quantity }));
+    // when we dispatch, we call the addProduct function we
+    // added to our cartSlice.js. We then also need data from
+    // all all the values added above, eg price, extras, etc
+    // we passe these values as a payload
   };
 
   console.log(extras);
@@ -147,7 +160,9 @@ function Product({ pizza }) {
             defaultValue={1}
             className={styles.quantity}
           />
-          <button className={styles.button}>Add to Cart</button>
+          <button className={styles.button} onClick={handleClick}>
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>
