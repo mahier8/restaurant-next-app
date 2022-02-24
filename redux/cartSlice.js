@@ -21,7 +21,9 @@ const cartSlice = createSlice({
       // be our new total
     },
     reset: (state) => {
-      state = initialState;
+      state.products = [];
+      state.quantity = 0;
+      state.total = 0;
       // we now set the state back to the initialState,
       // which is an empty products array and total of 0
     },
