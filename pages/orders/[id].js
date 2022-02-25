@@ -97,13 +97,13 @@ function Order({ order }) {
         <div className={styles.wrapper}>
           <h2 className={styles.title}>CART TOTAL</h2>
           <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Subtotal:</b>$79.60
+            <b className={styles.totalTextTitle}>Subtotal:</b>${order.total}
           </div>
           <div className={styles.totalText}>
             <b className={styles.totalTextTitle}>Discount:</b>$0.00
           </div>
           <div className={styles.totalText}>
-            <b className={styles.totalTextTitle}>Total:</b>$79.60
+            <b className={styles.totalTextTitle}>Total:</b>${order.total}
           </div>
           <button disabled className={styles.button}>
             PAID

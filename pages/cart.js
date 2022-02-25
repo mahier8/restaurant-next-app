@@ -17,12 +17,15 @@ import axios from "axios";
 import { useRouter } from "next/router";
 // Redux function
 import { reset } from "../redux/cartSlice";
+import OrderDetail from "../component/OrderDetail";
 
 function Cart() {
   // Redux actions
   const cart = useSelector((state) => state.cart);
   // This values are the props in the UI, react paypal.js
   const [open, setOpen] = useState(false);
+  const [cash, setCash] = useState(false);
+
   // const amount = "2";
   const amount = cart.total; // changed this amount to match the total in the cart
   const currency = "USD";
@@ -179,7 +182,12 @@ function Cart() {
           {/* react paypal.js */}
           {open ? ( // if open show me this
             <div className={styles.paymentMethods}>
-              <button className={styles.payButton}>CASH ON DELIVERY</button>
+              <button
+                className={styles.payButton}
+                onClick={() => setCash(true)}
+              >
+                CASH ON DELIVERY
+              </button>
               <PayPalScriptProvider
                 options={{
                   "client-id":
@@ -200,6 +208,7 @@ function Cart() {
           )}
         </div>
       </div>
+      {cash && <OrderDetail total={cart.total} createOrder={createOrder} />}
     </div>
   );
 }
