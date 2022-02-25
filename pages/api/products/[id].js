@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     // file in the Product folder. The params.
   } = req;
 
-  dbConnect();
+  await dbConnect();
 
   if (method === "GET") {
     // GET (READ) the data (pizza)

@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   const { method } = req;
 
   // we first have to make sure our db is connected
-  dbConnect();
+  await dbConnect();
 
   // if we use the GET method then do this
   if (method === "GET") {

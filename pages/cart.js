@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import styles from "../styles/Cart.module.css";
 import Image from "next/image";
-
 // Redux imports
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
 // react paypal.js library
 import { useEffect } from "react";
 import {
@@ -13,30 +11,24 @@ import {
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
-
 //axios
 import axios from "axios";
-
 // next router
 import { useRouter } from "next/router";
-
 // Redux function
 import { reset } from "../redux/cartSlice";
 
 function Cart() {
   // Redux actions
   const cart = useSelector((state) => state.cart);
-
   // This values are the props in the UI, react paypal.js
   const [open, setOpen] = useState(false);
   // const amount = "2";
   const amount = cart.total; // changed this amount to match the total in the cart
   const currency = "USD";
   const style = { layout: "vertical" };
-
   // Redux actions
   const dispatch = useDispatch();
-
   // useRouter
   const router = useRouter();
 
@@ -47,10 +39,13 @@ function Cart() {
     try {
       const res = await axios.post("http://localhost:3000/api/orders", data);
       // we want to redirect the user in the positive occurence
-      if (res.status === 201) {
-        dispatch(reset()); // an action taken from our Cartslice (redux)
-        router.push(`/orders/${res.data._id}`);
-      }
+      // if (res.status === 201) {
+      //   dispatch(reset()); // an action taken from our Cartslice (redux)
+      //   router.push(`/orders/${res.data._id}`);
+      // }
+      console.log(res.data._id);
+      res.status === 201 && router.push("/orders/" + res.data._id);
+      dispatch(reset());
     } catch (err) {
       console.log(err);
     }
@@ -101,7 +96,7 @@ function Cart() {
           onApprove={function (data, actions) {
             return actions.order.capture().then(function (details) {
               // Your code here after capture the order, returns an object
-              console.log(details);
+              // console.log(details);
               const shipping = details.purchase_units[0].shipping;
               createOrder({
                 customer: shipping.name.full_name,

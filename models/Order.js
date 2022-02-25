@@ -1,19 +1,19 @@
-import { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 // creating a schema for orders. Need schemas for OrderId(names),
 // Customer, Adress, Total, additional ingredients, images
 //  *check the orders page
-const OrderSchema = new Mongoose.Schema(
+const OrderSchema = new mongoose.Schema(
   {
     customer: {
       type: String,
       required: true,
-      maxLength: 60,
+      maxlength: 60,
     },
     address: {
       type: String,
       required: true,
-      maxLength: 200,
+      maxlength: 200,
     },
     total: {
       type: Number,
@@ -33,4 +33,4 @@ const OrderSchema = new Mongoose.Schema(
 
 // if we already have a model for Product, do not create an
 // additional model, just use the model we already have
-export default Mongoose.models.Order || Mongoose.model("Order", OrderSchema);
+export default mongoose.models.Order || mongoose.model("Order", OrderSchema);

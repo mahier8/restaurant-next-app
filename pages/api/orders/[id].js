@@ -14,8 +14,8 @@ const handler = async (req, res) => {
   if (method === "GET") {
     try {
       const order = await Order.findById(id);
-      res.status(201).json(order);
-    } catch {
+      res.status(200).json(order);
+    } catch (err) {
       res.status(500).json(err);
     }
   }
