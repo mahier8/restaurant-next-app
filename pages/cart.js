@@ -35,8 +35,6 @@ function Cart() {
   // useRouter
   const router = useRouter();
 
-  // I HAVE A PROBLEM SOMEWHERE HERE MY PAGE ISNT REDIRECTING
-
   // we are creating an order, will probably be linked to our API
   const createOrder = async (data) => {
     try {

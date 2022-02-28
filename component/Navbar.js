@@ -21,7 +21,10 @@ function Navbar() {
       </div>
       <div className={styles.item}>
         <ul className={styles.list}>
-          <li className={styles.listItem}>HomePage</li>
+          <Link href="/" passHref>
+            <li className={styles.listItem}>HomePage</li>
+          </Link>
+
           <li className={styles.listItem}>Products</li>
           <li className={styles.listItem}>Menu</li>
           {/* my image below isnt working */}
