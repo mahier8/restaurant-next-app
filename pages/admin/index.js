@@ -10,6 +10,8 @@ const Index = ({ orders, products }) => {
   // function below
   const [pizzaList, setPizzaList] = useState(products);
   const [ordersList, setOrdersList] = useState(orders);
+  // a variable to control the status
+  const status = ["preparing", "on the way", "delievered"];
 
   const handleDelete = async (id) => {
     console.log(id);
@@ -19,13 +21,40 @@ const Index = ({ orders, products }) => {
       // check above for UI changes
       const res = await axios.delete(
         "http://localhost:3000/api/products/" + id
-      ); // for the UI
+      );
+      // for the UI
       setPizzaList(pizzaList.filter((pizza) => pizza._id !== id));
     } catch (err) {
       // we catch an error in case
       console.log(err);
     }
   };
+
+  // when we click on the next stage button
+  const handleStatus = async (id) => {
+    // we filter though the orders we have making the sure
+    // the id matches. We then take the first match we get
+    const item = ordersList.filter((order) => order._id === id)[0];
+    // we set the status, look at the above variable declared
+    const currentStatus = item.status;
+
+    try {
+      // to update the db
+      const res = await axios.put("http://localhost:3000/api/orders/" + id, {
+        // we add 1 to our current status each time we click
+        status: currentStatus + 1,
+      });
+      // then, for the UI
+      setOrdersList([
+        res.data, // get back our response data
+        // we delete our order in our orderList
+        ...ordersList.filter((order) => order._id !== id),
+      ]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.item}>
@@ -83,17 +112,26 @@ const Index = ({ orders, products }) => {
               <th>Action</th>
             </tr>
           </tbody>
-          {orders.map((order) => (
+          {ordersList.map((order) => (
             <tbody key={order._id}>
               <tr className={styles.trTitle}>
                 {/* a javascript method to only display the first 5 numbers */}
-                <td>{"8555241688151584".slice(0, 5)}...</td>
-                <td>John Doe</td>
-                <td>50$</td>
-                <td>paid</td>
-                <td>preparing</td>
+                <td>{order._id.slice(0, 5)}...</td>
+                <td>{order.customer}</td>
+                <td>${order.total}</td>
                 <td>
-                  <button>Next stage</button>
+                  {/* we are checking the order method. If its 0 return 
+                  the first span otherwise return the second span */}
+                  {order.method === 0 ? <span>Cash</span> : <span>Paid</span>}
+                </td>
+                {/* we set the status variable above, to the order model
+                 status, just like we got data from the order model before */}
+                <td>{status[order.status]}</td>
+                <td>
+                  {/* call the function handleStatus and pass in the order._id as a value */}
+                  <button onClick={() => handleStatus(order._id)}>
+                    Next stage
+                  </button>
                 </td>
               </tr>
             </tbody>
